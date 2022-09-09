@@ -35,7 +35,7 @@ class MovieNotesController {
 
     await knex("movie_tags").insert(tagsInsert);
 
-    response.json();
+    return response.json();
   }
 
   async showMovieNotes(request, response) {

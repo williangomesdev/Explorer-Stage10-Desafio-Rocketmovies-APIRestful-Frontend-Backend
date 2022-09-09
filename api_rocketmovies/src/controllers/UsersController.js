@@ -25,7 +25,7 @@ class UsersController {
       password: hashedPassword,
     });
 
-    response.json();
+    return response.json();
   }
 
   async updateUser(request, response) {
@@ -72,7 +72,7 @@ class UsersController {
       email,
       password: user.password,
     });
-    response.json();
+    return response.json();
   }
 }
 
