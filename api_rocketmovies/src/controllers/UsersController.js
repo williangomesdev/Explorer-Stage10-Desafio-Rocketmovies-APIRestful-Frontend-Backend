@@ -6,15 +6,25 @@ let hashedPassword;
 class UsersController {
   async createUser(request, response) {
     const { name, email, password, avatar } = request.body;
+    const searchName = await knex("users").select("name");
+    const searchEmail = await knex("users").select("email");
+    const nameAlreadyExists = searchName.filter((el) => el.name == name).length;
+    const emailAlreadyExists = searchEmail.filter((el) => el.email == email).length;
 
     if (!name) {
       throw new AppError("Nome é obrigatório!");
-    }
-    if (!email) {
+    } else if (!email) {
       throw new AppError("Email é obrigatório!");
-    }
-    if (!password) {
+    } else if (!password) {
       throw new AppError("Senha é obrigatória!");
+    } else if (emailAlreadyExists > 0) {
+      throw new AppError(
+        "E-mail ja está em uso. favor adicionar outro endereço de e-mail "
+      );
+    } else if (nameAlreadyExists > 0) {
+      throw new AppError(
+        "Nome de usuário ja está em uso por outro perfil, favor adicionar outro nome "
+      );
     }
 
     hashedPassword = await hash(password, 8);
@@ -38,12 +48,8 @@ class UsersController {
     ]);
     const searchName = await knex("users").select("name");
     const searchEmail = await knex("users").select("email");
-    const userIdExists = await knex("users")
-      .select("id")
-      .where("id", [user_id]);
-    const emailAlreadyExists = searchEmail.filter(
-      (el) => el.email == email
-    ).length;
+    const userIdExists = await knex("users").select("id").where("id", [user_id]);
+    const emailAlreadyExists = searchEmail.filter((el) => el.email == email).length;
     const nameAlreadyExists = searchName.filter((el) => el.name == name).length;
 
     if (userIdExists.length === 0) {

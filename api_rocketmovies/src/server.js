@@ -2,6 +2,7 @@ require("express-async-errors");
 const database = require("./database/sqlite");
 const AppError = require("./utils/AppError");
 const uploadConfig = require("./configs/upload");
+const cors = require("cors");
 
 const express = require("express");
 
