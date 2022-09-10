@@ -30,13 +30,17 @@ class UsersController {
 
   async updateUser(request, response) {
     const { name, email, password, old_password } = request.body;
-    const { id } = request.params;
+    const user_id = request.user.id;
 
     const database = await sqliteConnection();
-    const user = await database.get("SELECT * FROM users WHERE id = (?)", [id]);
+    const user = await database.get("SELECT * FROM users WHERE id = (?)", [
+      user_id,
+    ]);
     const searchName = await knex("users").select("name");
     const searchEmail = await knex("users").select("email");
-    const userIdExists = await knex("users").select("id").where("id", [id]);
+    const userIdExists = await knex("users")
+      .select("id")
+      .where("id", [user_id]);
     const emailAlreadyExists = searchEmail.filter(
       (el) => el.email == email
     ).length;
@@ -67,11 +71,10 @@ class UsersController {
       user.password = await hash(password, 8);
     }
 
-    await knex("users").where({ id }).update({
-      name,
-      email,
-      password: user.password,
-    });
+    await database.run(
+      `UPDATE users SET name = ?, email = ?,password =?, updated_at = DATETIME('now') WHERE id =?`,
+      [user.name, user.email, user.password, user_id]
+    );
     return response.json();
   }
 }

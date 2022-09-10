@@ -4,7 +4,7 @@ const knex = require("../database/knex");
 class MovieNotesController {
   async createMovieNotes(request, response) {
     const { title, description, rating, tags } = request.body;
-    const { user_id } = request.params;
+    const user_id = request.user.id;
 
     if (!title) {
       throw new AppError("Título do filme é obrigatório!");
@@ -61,8 +61,9 @@ class MovieNotesController {
   }
 
   async indexMovie(request, response) {
-    const { user_id, title, tags } = request.query;
+    const { title, tags } = request.query;
 
+    const user_id = request.user.id;
     let notesUser;
 
     if (tags) {
