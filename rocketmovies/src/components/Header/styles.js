@@ -24,7 +24,7 @@ export const Profile = styled.div`
   align-items: center;
   gap: 0.5625rem;
 
-  > img {
+  > .link > img {
     width: 4rem;
     height: 4rem;
     border-radius: 50%;

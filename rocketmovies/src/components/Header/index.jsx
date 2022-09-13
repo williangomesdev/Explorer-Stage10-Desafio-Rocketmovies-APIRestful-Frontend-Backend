@@ -15,10 +15,12 @@ export function Header() {
             sair
           </a>
         </div>
-        <img
-          src="https://github.com/williangomesdev.png"
-          alt="foto do perfil"
-        />
+        <Link to="/profile" className="link">
+          <img
+            src="https://github.com/williangomesdev.png"
+            alt="foto do perfil"
+          />
+        </Link>
       </Profile>
     </Container>
   );
