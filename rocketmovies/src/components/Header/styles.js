@@ -19,7 +19,7 @@ export const Container = styled.header`
   }
 `;
 
-export const Profile = styled(Link)`
+export const Profile = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5625rem;

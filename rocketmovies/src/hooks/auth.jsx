@@ -24,25 +24,29 @@ function AuthProvider({ children }) {
     }
   }
 
+  function signOut() {
+    localStorage.removeItem("@rocketmovies:user");
+    localStorage.removeItem("@rocketmovies:token");
+
+    setData({});
+  }
 
   useEffect(() => {
     const user = localStorage.getItem("@rocketmovies:user");
     const token = localStorage.getItem("@rocketmovies:token");
     if (token && user) {
       api.defaults.headers.authorization = `Bearer ${token}`;
-  
+
       setData({ user: JSON.parse(user), token });
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ signIn, user: data.user }}>
+    <AuthContext.Provider value={{ signIn, user: data.user, signOut }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
-
 
 function useAuth() {
   const context = useContext(AuthContext);
