@@ -17,7 +17,6 @@ function AuthProvider({ children }) {
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       setData({ user, token });
-
     } catch (error) {
       if (error.response) {
         alert(error.response.data.message);
@@ -34,7 +33,15 @@ function AuthProvider({ children }) {
     setData({});
   }
 
-  async function updateProfile({ user }) {
+  async function updateProfile({ user, avatarFile }) {
+    if (avatarFile) {
+      const fileUploadForm = new FormData();
+      fileUploadForm.append("avatar", avatarFile);
+
+      const response = await api.patch("/users/avatar", fileUploadForm);
+      user.avatar = response.data.avatar;
+    }
+
     try {
       await api.put("/users", user);
       localStorage.setItem("@rocketmovies:user", JSON.stringify(user));
