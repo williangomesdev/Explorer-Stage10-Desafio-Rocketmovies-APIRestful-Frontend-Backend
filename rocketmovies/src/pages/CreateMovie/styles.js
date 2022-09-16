@@ -49,7 +49,7 @@ export const Form = styled.form`
     }
   }
 
-  div:nth-child(2),
+  .titleInput,
   div:nth-child(6) {
     display: flex;
     flex-direction: row;
@@ -66,6 +66,7 @@ export const Form = styled.form`
     border-radius: 0.625rem;
 
     background: ${({ theme }) => theme.COLORS.BACKGROUND_INPUT};
+    color: ${({ theme }) => theme.COLORS.WHITE};
 
     &::placeholder {
       color: ${({ theme }) => theme.COLORS.GRAY_400};
@@ -84,25 +85,8 @@ export const Form = styled.form`
 
     display: flex;
     align-items: center;
+    gap: 1.5rem;
     background: ${({ theme }) => theme.COLORS.BLACK};
-
-    span {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 1rem;
-      padding-block: 1.25rem;
-    }
-
-    span:nth-child(2) {
-      background: transparent;
-      border: 2px dashed ${({ theme }) => theme.COLORS.GRAY_400};
-    }
-
-    svg {
-      font-size: 1.5rem;
-      color: ${({ theme }) => theme.COLORS.ROSE};
-    }
   }
 
   div:nth-child(6) {

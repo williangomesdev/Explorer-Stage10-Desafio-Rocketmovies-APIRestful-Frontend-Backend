@@ -1,11 +1,9 @@
-import { FiArrowLeft, FiPlus, FiX } from 'react-icons/fi'
+import { FiArrowLeft} from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { Button } from '../../components/Button'
-import { ButtonText } from '../../components/ButtonText'
+import { CreateMovieTag } from '../../components/CreateMovieTag'
 import { Header } from '../../components/Header'
 import { Input } from '../../components/Input'
-import { Section } from '../../components/Section'
-import { Tag } from '../../components/Tag'
 import { Container, Form } from './styles'
 
 export function CreateMovie() {
@@ -21,15 +19,15 @@ export function CreateMovie() {
                         <h1>Novo Filme</h1>
                     </header>
 
-                    <div>
+                    <div className="titleInput">
                         <Input placeholder="Título" type="text" />
                         <Input placeholder="Sua nota (de 0 a 5)" type="text" />
                     </div>
                     <textarea placeholder='Observações' />
                     <h2>Marcadores</h2>
                     <div className='tagSpace'>
-                        <Tag title="React" icon={<FiX />} />
-                        <Tag title="Novo marcador" icon={<FiPlus />} />
+                       <CreateMovieTag placeholder="react"/>
+                       <CreateMovieTag isNew placeholder="Novo Marcador"/>
                     </div>
 
                     <div>
