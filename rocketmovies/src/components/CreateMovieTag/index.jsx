@@ -4,7 +4,7 @@ import { Container } from "./styles";
 export function CreateMovieTag({ isNew, value, onClick, ...rest }) {
   return (
     <Container isNew={isNew}>
-      <input type="text" size={10} value={value} readOnly={!isNew} {...rest} />
+      <input type="text" value={value} readOnly={!isNew} {...rest} />
       <button type="button" onClick={onClick}>
         {isNew ? <FiPlus /> : <FiX />}
       </button>
