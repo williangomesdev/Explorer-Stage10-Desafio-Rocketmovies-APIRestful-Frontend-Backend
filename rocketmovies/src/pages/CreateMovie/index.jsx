@@ -16,6 +16,10 @@ export function CreateMovie() {
     setNewTag("");
   }
 
+  function handleRemoveTag(deleted) {
+    setTags((prevState) => prevState.filter((tag) => tag !== deleted));
+  }
+
   return (
     <Container>
       <Header />
@@ -40,7 +44,9 @@ export function CreateMovie() {
               <CreateMovieTag
                 key={String(index)}
                 value={tag}
-                onClick={() => {}}
+                onClick={() => {
+                  handleRemoveTag(tag);
+                }}
               />
             ))}
             <CreateMovieTag
