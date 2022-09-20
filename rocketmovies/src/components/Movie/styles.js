@@ -23,10 +23,17 @@ export const Container = styled.button`
     flex-direction: row;
     gap: 0.4375rem;
 
-    svg {
+    svg.rating {
       width: 0.75rem;
       height: 0.75rem;
       color: ${({ theme }) => theme.COLORS.ROSE};
+      opacity: 1;
+    }
+
+    svg {
+      width: 0.75rem;
+      height: 0.75rem;
+      opacity: 0;
     }
   }
 
