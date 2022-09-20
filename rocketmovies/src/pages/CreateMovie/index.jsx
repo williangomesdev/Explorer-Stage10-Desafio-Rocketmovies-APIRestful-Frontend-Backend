@@ -28,6 +28,20 @@ export function CreateMovie() {
   }
 
   async function handleNewMovieNote() {
+    if (!title) {
+      return alert("Digite o titulo do filme");
+    }
+
+    if (!rating) {
+      return alert("Digite uma nota para o filme");
+    }
+
+    if (newTag) {
+      return alert(
+        "Você deixou uma tag no campo para adicionar, mas não clicou em adicionar.Clique para adicionar ou deixe o campo vazio"
+      );
+    }
+
     await api.post("/notes", {
       title,
       description,
