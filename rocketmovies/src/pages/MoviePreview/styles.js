@@ -26,18 +26,43 @@ export const Container = styled.div`
 
     color: ${({ theme }) => theme.COLORS.GRAY_100};
 
-    > div:nth-child(1) {
-      cursor: pointer;
+    div:nth-child(1) {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-      justify-content: flex-start;
-      gap: 0.625rem;
-      margin-bottom: 1.5rem;
-      color: ${({ theme }) => theme.COLORS.ROSE};
+      > div.back-button {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.625rem;
 
-      > svg {
         color: ${({ theme }) => theme.COLORS.ROSE};
+
+        > svg {
+          color: ${({ theme }) => theme.COLORS.ROSE};
+        }
+      }
+
+      a {
+        background: ${({ theme }) => theme.COLORS.ROSE};
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        color: ${({ theme }) => theme.COLORS.BACKGROUND};
+        padding-block: 0.8438rem;
+        padding-inline: 2rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        line-height: 1.3125rem;
+
+        svg {
+          width: 1rem;
+          height: 1rem;
+        }
       }
     }
 
@@ -47,7 +72,7 @@ export const Container = styled.div`
       align-items: center;
       justify-content: flex-start;
       gap: 1.25rem;
-      margin-bottom: 1.5rem;
+      margin-block: 1.5rem;
 
       > div {
         display: flex;
@@ -62,7 +87,7 @@ export const Container = styled.div`
         }
 
         svg {
-         display: none;
+          display: none;
         }
       }
     }

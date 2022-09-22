@@ -1,9 +1,9 @@
 import { Header } from "../../components/Header";
 import { Tag } from "../../components/Tag";
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiTrash } from "react-icons/fi";
 import { BsStarFill, BsStar, BsClock } from "react-icons/bs";
 import { Container } from "./styles";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { api } from "../../../../api_rocketmovies/src/services/api";
 import { useAuth } from "../../hooks/auth";
@@ -14,14 +14,20 @@ export function MoviePreview() {
   const navigate = useNavigate();
   const params = useParams();
 
-  console.log(data);
-
   const avatarUrl = user.avatar
     ? `${api.defaults.baseURL}/files/${user.avatar}`
     : avatarPlaceholder;
 
   function backToPage() {
     navigate("/");
+  }
+
+  async function handleRemoveMovie() {
+    const confirm = window.confirm("Deseja realmente excluir o filme !");
+    if (confirm) {
+      await api.delete(`/notes/${params.id}`);
+      backToPage();
+    }
   }
 
   useEffect(() => {
@@ -39,10 +45,17 @@ export function MoviePreview() {
 
       {data && (
         <main>
-          <div onClick={backToPage}>
-            <FiArrowLeft />
-            <p>Voltar</p>
+          <div>
+            <div className="back-button" onClick={backToPage}>
+              <FiArrowLeft />
+              <p>Voltar</p>
+            </div>
+            <a onClick={handleRemoveMovie}>
+              <FiTrash />
+              Excluir filme
+            </a>
           </div>
+
           <div>
             <h1>{data.title}</h1>
             <div>
