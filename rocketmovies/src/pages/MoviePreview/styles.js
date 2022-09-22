@@ -54,6 +54,7 @@ export const Container = styled.div`
         flex-direction: row;
         gap: 0.7031rem;
         svg.rating {
+          display: block;
           width: 1.25rem;
           height: 1.25rem;
           color: ${({ theme }) => theme.COLORS.ROSE};
@@ -61,9 +62,7 @@ export const Container = styled.div`
         }
 
         svg {
-          width: 1.25rem;
-          height: 1.25rem;
-          opacity: 0;
+         display: none;
         }
       }
     }

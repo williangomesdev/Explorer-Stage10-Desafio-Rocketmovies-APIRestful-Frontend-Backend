@@ -51,6 +51,10 @@ export function MoviePreview() {
               <BsStarFill className={data.rating >= 3 ? "rating" : ""} />
               <BsStarFill className={data.rating >= 4 ? "rating" : ""} />
               <BsStarFill className={data.rating >= 5 ? "rating" : ""} />
+              <BsStar className={data.rating <= 4 ? "rating" : ""} />
+              <BsStar className={data.rating <= 3 ? "rating" : ""} />
+              <BsStar className={data.rating <= 2 ? "rating" : ""} />
+              <BsStar className={data.rating <= 1 ? "rating" : ""} />
             </div>
           </div>
           <div>

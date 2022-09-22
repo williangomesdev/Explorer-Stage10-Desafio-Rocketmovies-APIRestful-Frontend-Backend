@@ -18,6 +18,10 @@ export function CreateMovie() {
 
   const navigate = useNavigate();
 
+  function backToPage() {
+    navigate("/");
+  }
+
   function handleAddTag() {
     setTags((prevState) => [...prevState, newTag]);
     setNewTag("");
@@ -34,6 +38,10 @@ export function CreateMovie() {
 
     if (!rating) {
       return alert("Digite uma nota para o filme");
+    } else if (rating == 0) {
+      return alert("Digite uma nota entre 1 e 5 para cadastrar o filme!");
+    } else if (rating > 5) {
+      return alert("Digite uma nota entre 1 e 5 para cadastrar o filme!");
     }
 
     if (newTag) {
@@ -72,7 +80,7 @@ export function CreateMovie() {
               onChange={(event) => setTitle(event.target.value)}
             />
             <Input
-              placeholder="Sua nota (de 0 a 5)"
+              placeholder="Sua nota (de 1 a 5)"
               type="text"
               onChange={(event) => setRating(event.target.value)}
             />
@@ -102,7 +110,7 @@ export function CreateMovie() {
           </div>
 
           <div>
-            <Button title="Excluir filme" />
+            <Button title="Cancelar" onClick={backToPage} />
             <Button title="Salvar filme" onClick={handleNewMovieNote} />
           </div>
         </Form>
