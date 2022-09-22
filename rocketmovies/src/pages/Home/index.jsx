@@ -11,12 +11,12 @@ export function Home() {
   const [movieNotes, setMovieNotes] = useState([]);
 
   useEffect(() => {
-    async function fetchNotes() {
+    async function fetchMovieNotes() {
       const response = await api.get(`/notes?title=${search}`);
       setMovieNotes(response.data);
     }
-    fetchNotes();
-  }, []);
+    fetchMovieNotes();
+  }, [search]);
 
   return (
     <Container>
