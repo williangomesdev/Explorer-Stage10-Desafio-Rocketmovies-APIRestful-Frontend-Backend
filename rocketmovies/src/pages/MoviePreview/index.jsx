@@ -19,7 +19,7 @@ export function MoviePreview() {
     : avatarPlaceholder;
 
   function backToPage() {
-    navigate("/");
+    navigate(-1);
   }
 
   async function handleRemoveMovie() {
