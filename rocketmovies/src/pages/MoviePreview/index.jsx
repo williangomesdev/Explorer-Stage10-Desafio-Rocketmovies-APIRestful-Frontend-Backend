@@ -1,68 +1,82 @@
-import { Header } from '../../components/Header'
-import { ButtonText } from '../../components/ButtonText'
-import { Tag } from '../../components/Tag'
-import { FiArrowLeft } from 'react-icons/fi';
+import { Header } from "../../components/Header";
+import { Tag } from "../../components/Tag";
+import { FiArrowLeft } from "react-icons/fi";
 import { BsStarFill, BsStar, BsClock } from "react-icons/bs";
-
-import { Container } from './styles'
-
+import { Container } from "./styles";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { api } from "../../../../api_rocketmovies/src/services/api";
+import { useAuth } from "../../hooks/auth";
 
 export function MoviePreview() {
-    return (
-        <Container>
-            <Header />
-            <main>
-                <div>
-                    <FiArrowLeft /><ButtonText title="Voltar" />
-                </div>
-                <div>
-                    <h1>Interestellar</h1>
-                    <div>
-                        <BsStarFill />
-                        <BsStarFill />
-                        <BsStarFill />
-                        <BsStarFill />
-                        <BsStar />
-                    </div>
-                </div>
-                <div>
-                    <img src="https://github.com/williangomesdev.png" alt="foto do perfil" />
-                    <span>Por Willian Amaro Gomes</span>
-                    <BsClock />
-                    <span>08/08/2022 as 08:00</span>
-                </div>
-                <div>
-                    <Tag title="Ficção Cientifica" />
-                    <Tag title="Drama" />
-                    <Tag title="Familia" />
-                </div>
-                <p>
-                    Pragas nas colheitas fizeram a civilização humana regredir para uma sociedade
-                    agrária em futuro de data desconhecida. Cooper, ex-piloto da NASA,
-                    tem uma fazenda com sua família. Murphy, a filha de dez anos de Cooper, acredita que seu quarto está assombrado por um fantasma que tenta se comunicar com ela. Pai e filha descobrem que o "fantasma" é uma inteligência desconhecida que está enviando mensagens codificadas através de radiação gravitacional, deixando coordenadas em binário que os levam até uma instalação secreta da NASA liderada pelo professor John Brand. O cientista revela que um buraco de minhoca foi aberto perto de Saturno e que ele leva a planetas que podem oferecer condições de sobrevivência para a espécie humana. As "missões Lázaro" enviadas anos antes identificaram três planetas potencialmente habitáveis orbitando o buraco negro Gargântua: Miller, Edmunds e Mann – nomeados em homenagem aos astronautas que os pesquisaram.
-                    Brand recruta Cooper para pilotar a nave espacial Endurance e recuperar os dados dos
-                    astronautas; se um dos planetas se mostrar habitável,
-                    a humanidade irá seguir para ele na instalação da NASA,
-                    que é na realidade uma enorme estação espacial.
-                    A partida de Cooper devasta Murphy.
-                </p>
-                <br />
-                <p>
+  const { user } = useAuth();
+  const [data, setData] = useState(null);
+  const navigate = useNavigate();
+  const params = useParams();
 
-                    Além de Cooper, a tripulação da Endurance é formada pela bióloga Amelia,
-                    filha de Brand; o cientista Romilly, o físico planetário Doyle,
-                    além dos robôs TARS e CASE. Eles entram no buraco de minhoca e se dirigem a Miller,
-                    porém descobrem que o planeta possui enorme dilatação gravitacional
-                    temporal por estar tão perto de Gargântua: cada hora na
-                    superfície equivale a sete anos na Terra. Eles entram em Miller e
-                    descobrem que é inóspito já que é coberto por um oceano raso
-                    e agitado por ondas enormes. Uma onda atinge a tripulação
-                    enquanto Amelia tenta recuperar os dados de Miller, matando
-                    Doyle e atrasando a partida. Ao voltarem para a Endurance,
-                    Cooper e Amelia descobrem que 23 anos se passaram.
-                </p>
-            </main>
+  console.log(data);
 
-        </Container>
-    )
-} 
+  const avatarUrl = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
+
+  function backToPage() {
+    navigate("/");
+  }
+
+  useEffect(() => {
+    async function fetchMovieNotes() {
+      const response = await api.get(`notes/${params.id}`);
+      setData(response.data);
+    }
+
+    fetchMovieNotes();
+  }, []);
+
+  return (
+    <Container>
+      <Header />
+
+      {data && (
+        <main>
+          <div onClick={backToPage}>
+            <FiArrowLeft />
+            <p>Voltar</p>
+          </div>
+          <div>
+            <h1>{data.title}</h1>
+            <div>
+              <BsStarFill className={data.rating >= 1 ? "rating" : ""} />
+              <BsStarFill className={data.rating >= 2 ? "rating" : ""} />
+              <BsStarFill className={data.rating >= 3 ? "rating" : ""} />
+              <BsStarFill className={data.rating >= 4 ? "rating" : ""} />
+              <BsStarFill className={data.rating >= 5 ? "rating" : ""} />
+            </div>
+          </div>
+          <div>
+            <img src={avatarUrl} alt="foto do perfil" />
+            <span>{user.name}</span>
+            <BsClock />
+            <span>
+              {`${data.updated_at.split(/T|\s/)[0].split("-")[2]}/
+              ${data.updated_at.split(/T|\s/)[0].split("-")[1]}/
+              ${data.updated_at.split(/T|\s/)[0].split("-")[1]} às 
+              ${data.updated_at.split(/T|\s/)[1].split(":")[0] - 3}:
+              ${data.updated_at.split(/T|\s/)[1].split(":")[1]}`}
+            </span>
+          </div>
+
+          {data.tagMovie && (
+            <div>
+              {data.tagMovie.map((tag) => (
+                <Tag key={String(tag.id)} title={tag.name} />
+              ))}
+            </div>
+          )}
+
+          <p>{data.description}</p>
+        </main>
+      )}
+    </Container>
+  );
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { api } from "../../../../api_rocketmovies/src/services/api";
 import { Header } from "../../components/Header";
 import { Movie } from "../../components/Movie";
@@ -9,6 +9,11 @@ import { Container } from "./styles";
 export function Home() {
   const [search, setSearch] = useState("");
   const [movieNotes, setMovieNotes] = useState([]);
+  const navigate = useNavigate();
+
+  function handleMoviePreview(id) {
+    navigate(`/preview/${id}`);
+  }
 
   useEffect(() => {
     async function fetchMovieNotes() {
@@ -30,7 +35,11 @@ export function Home() {
       </div>
       <div className="movieTags">
         {movieNotes.map((movie, index) => (
-          <Movie key={String(index)} data={movie} />
+          <Movie
+            key={String(index)}
+            data={movie}
+            onClick={() => handleMoviePreview(movie.id)}
+          />
         ))}
       </div>
     </Container>

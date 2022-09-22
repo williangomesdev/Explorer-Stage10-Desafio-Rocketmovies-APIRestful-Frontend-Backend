@@ -27,12 +27,14 @@ export const Container = styled.div`
     color: ${({ theme }) => theme.COLORS.GRAY_100};
 
     > div:nth-child(1) {
+      cursor: pointer;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
       gap: 0.625rem;
       margin-bottom: 1.5rem;
+      color: ${({ theme }) => theme.COLORS.ROSE};
 
       > svg {
         color: ${({ theme }) => theme.COLORS.ROSE};
@@ -51,8 +53,17 @@ export const Container = styled.div`
         display: flex;
         flex-direction: row;
         gap: 0.7031rem;
-        > svg {
+        svg.rating {
+          width: 1.25rem;
+          height: 1.25rem;
           color: ${({ theme }) => theme.COLORS.ROSE};
+          opacity: 1;
+        }
+
+        svg {
+          width: 1.25rem;
+          height: 1.25rem;
+          opacity: 0;
         }
       }
     }
